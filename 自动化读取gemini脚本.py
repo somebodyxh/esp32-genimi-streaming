@@ -30,7 +30,7 @@ def user_chrome():
             dir = USER_Input_Windows.strip('"').strip("'")
             return os.path.abspath(dir)
     else:  # Linux
-            print("请输入用户数据目录路径（留空则使用 ~/.config/google-chrome/Gemini_Pro）")
+            print("请输入用户数据目录路径（留空则使用 ~/.config/google-chrome/Gemini_Pro)")
             USER_Input_Linux = input("路径: ").strip()
             if USER_Input_Linux:
                 return os.path.abspath(USER_Input_Linux)
@@ -45,7 +45,7 @@ def select_serial_port():
         print("没有检测到任何串口设备")
         exit(1)
     
-    print("🔍 检测到以下串口：")
+    print("检测到以下串口：")
     for i, port in enumerate(ports):
         print(f"   {i}: {port.device} - {port.description}")
     
@@ -125,7 +125,7 @@ def throttled_serial_send(ser, text):
     try:
         full_msg = f"\r\n[Gemini]: {text}\r\n"
         data = full_msg.encode('utf-8', errors='ignore')
-        print(f"[*] 开启流水回传 (共 {len(data)} 字节)...")
+        print(f"[*] 开启回传 (共 {len(data)} 字节)...")
 
         chunk_size = 6
         for i in range(0, len(data), chunk_size):
@@ -165,11 +165,11 @@ def sync_topics():
         print(f"[X] sync_topics 异常: {e}")
 
 # ========== 主循环 ==========
-print("[*] 系统就绪，正在监控串口与浏览器...")
+print("[*] 就绪")
 
 while True:
     try:
-        # 检查浏览器是否还活着（轻量检测）
+        # 检查浏览器是否还活着
         _ = driver.window_handles
 
         # 1. 监控 Gemini 回复
@@ -201,11 +201,11 @@ while True:
                     new_btn = driver.find_elements(By.CSS_SELECTOR, "a[data-test-id='expanded-button']")
                     if new_btn:
                         driver.execute_script("arguments[0].click();", new_btn[0])
-                        print("[+] 已点击：发起新对话")
+                        print("已点击：发起新对话")
                         throttled_serial_send(ser, "NEW_CHAT_OK")
                     else:
                         driver.get("https://gemini.google.com/app")
-                        print("[!] 按钮不可见，已通过 URL 跳转新建")
+                        print("[!] 警告 请检查你是否打开了侧边栏 已通过 URL 跳转新建")
                     waiting_for_reply = False
                 elif msg.isdigit():
                     idx = int(msg) - 1
@@ -229,6 +229,6 @@ while True:
         time.sleep(2)
         driver = init_driver()
     except Exception as e:
-        print(f"[X] 运行时异常: {e}")
+        print(f"运行时异常: {e}")
 
     time.sleep(0.05)
