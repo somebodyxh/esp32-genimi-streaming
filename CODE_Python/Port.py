@@ -34,6 +34,16 @@ def select_serial_port():
         except KeyboardInterrupt:
             print("\n用户取消 退出。")
             exit(0)
+
+def Port_Open():
+    port = select_serial_port()
+    try:
+        ser = serial.Serial(port, 115200, timeout=0.01)
+        print(f"串口 {port} 打开成功")
+    except Exception as e:
+        print(f"打开串口失败: {e}")
+        return None
+    return ser
 if __name__ == "__main__":
     port = select_serial_port()
     print(f"串口是：{port}")

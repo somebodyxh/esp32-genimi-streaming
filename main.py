@@ -1,14 +1,12 @@
 from CODE_Python.config import SCNEIDER
-from CODE_Python.Selenium import Run_Selenium
+from CODE_Python.Api import Run_Api
 #指定esp32串口
 
-#主要功能1 发送与回传消息                  
+#主要功能一：发送与回传消息                  
 def Massger(msg):
-    if SCNEIDER == "selenium":
-        Run_Selenium()
-#目前只针对chrome和gemini作了实现 其他浏览器和ai我会慢慢更新 以下是api部分                         
-
-
+#其他ai和功能我会慢慢更新
+    if SCNEIDER == "api":
+            Run_Api()                  
 
 if __name__ == "__main__":
     Massger(None)

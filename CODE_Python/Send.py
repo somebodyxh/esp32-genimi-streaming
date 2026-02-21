@@ -7,7 +7,7 @@ def throttled_serial_send(ser, text):
                             global is_transmitting
                             is_transmitting = True
                             try:
-                                full_msg = f"\r\n[Gemini]: {text}\r\n"
+                                full_msg = f"\r\n[AI]: {text}\r\n"
                                 data = full_msg.encode('utf-8', errors='ignore')
                                 print(f"[回传 (共 {len(data)} 字节)...")
 
